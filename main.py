@@ -28,7 +28,7 @@ def signup(s: Session, email, password):
         "username": "0xNath",
         "firstname": "Nathanael",
         "lastname": "Renaud",
-        "confirm_password": "qzdqzZQDQZDqzdqzd",
+        "confirm_password": password,
         "password": password,
         "submit": "Log+In",
     }
